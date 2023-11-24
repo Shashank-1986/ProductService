@@ -16,9 +16,9 @@ import java.util.List;
 //it comprises of three annotation @Component, @Repository , @Controller.
 //These annotations help define the roles of various components in a Spring application
 public class FakeStoreProductService implements ProductService {
-        private String getProductURL = "https://fakestoreapi.com/products/{id}";
+        private String specificProductUrl = "https://fakestoreapi.com/products/{id}";
 
-        private String getAllProductURL = "https://fakestoreapi.com/products/";
+        private String genericProductUrl = "https://fakestoreapi.com/products";
         private RestTemplateBuilder restTemplateBuilder;
 
     FakeStoreProductService(RestTemplateBuilder restTemplateBuilder)
@@ -43,7 +43,7 @@ public class FakeStoreProductService implements ProductService {
         //will convert the http request, the object which you get into JSON and Java object back to JSON
         RestTemplate restTemplate = restTemplateBuilder.build();
         ResponseEntity<FakeStoreProductDTO> responseEntity =
-                        restTemplate.getForEntity(getProductURL,FakeStoreProductDTO.class, id);
+                        restTemplate.getForEntity(specificProductUrl,FakeStoreProductDTO.class, id);
 
         return convertGenericToDto(responseEntity.getBody());
     }
@@ -52,11 +52,10 @@ public class FakeStoreProductService implements ProductService {
     public List<GenericProductDTO> getAllProducts() {
 
         RestTemplate restTemplate = restTemplateBuilder.build();
-        ResponseEntity<List<FakeStoreProductDTO>> responseEntity =
-        restTemplate.getForEntity(getAllProductURL, List<FakeStoreProductDTO>.class);
-
+        ResponseEntity<FakeStoreProductDTO[]> responseEntity =
+                restTemplate.getForEntity(genericProductUrl, FakeStoreProductDTO[].class);
         List<GenericProductDTO> result = new ArrayList<>();
-        List<FakeStoreProductDTO> fakeStoreProductDTOS = responseEntity.getBody();
+        List<FakeStoreProductDTO> fakeStoreProductDTOS = List.of(responseEntity.getBody());
         for(FakeStoreProductDTO fakeStoreProductDTO : fakeStoreProductDTOS)
         {
             result.add(convertGenericToDto(fakeStoreProductDTO));
@@ -70,8 +69,13 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public void createProduct() {
+    public GenericProductDTO createProduct(GenericProductDTO genericProductDTO) {
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        ResponseEntity<FakeStoreProductDTO> responseEntity =
+            restTemplate.postForEntity(genericProductUrl, genericProductDTO, FakeStoreProductDTO.class);
 
+        GenericProductDTO genericProductDTO1 = convertGenericToDto(responseEntity.getBody());
+        return genericProductDTO1;
     }
 
     @Override

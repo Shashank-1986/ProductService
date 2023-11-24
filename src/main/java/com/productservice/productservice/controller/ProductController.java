@@ -40,7 +40,7 @@ public class ProductController {
 
     @GetMapping
     public List<GenericProductDTO> getAllProducts() {
-        return null;
+        return productService.getAllProducts();
     }
 
     @DeleteMapping("/{id}")
@@ -49,8 +49,8 @@ public class ProductController {
     }
 
     @PostMapping
-    public void createProduct() {
-
+    public GenericProductDTO createProduct(@RequestBody  GenericProductDTO genericProductDTO) {
+        return genericProductDTO;
     }
 
     public void updateProductByID(){
