@@ -2,6 +2,7 @@ package com.productservice.productservice.services;
 
 import com.productservice.productservice.dtos.FakeStoreProductDTO;
 import com.productservice.productservice.dtos.GenericProductDTO;
+import com.productservice.productservice.exceptions.ProductNotFoundException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,13 +12,13 @@ import java.util.List;
 
 public interface ProductService {
 
-    GenericProductDTO getProductByID(Long id);
+    GenericProductDTO getProductByID(Long id) throws ProductNotFoundException;
 
     List<GenericProductDTO> getAllProducts();
 
-    void deleteProductByID();
+    GenericProductDTO deleteProductByID(Long id);
 
     GenericProductDTO createProduct(GenericProductDTO genericProductDTO);
 
-    void updateProductByID();
+    GenericProductDTO updateProductByID(Long id, GenericProductDTO genericProductDTO);
 }
