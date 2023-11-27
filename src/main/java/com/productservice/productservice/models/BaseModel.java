@@ -9,5 +9,4 @@ import lombok.Setter;
 public class BaseModel {
 
     private Long id;
-
 }

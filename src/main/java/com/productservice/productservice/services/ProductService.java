@@ -1,5 +1,6 @@
 package com.productservice.productservice.services;
 
+import com.productservice.productservice.dtos.FakeStoreProductDTO;
 import com.productservice.productservice.dtos.GenericProductDTO;
 import com.productservice.productservice.exceptions.ProductNotFoundException;
 
