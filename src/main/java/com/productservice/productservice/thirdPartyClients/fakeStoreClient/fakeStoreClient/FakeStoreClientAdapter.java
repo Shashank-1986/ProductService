@@ -6,6 +6,8 @@ import com.productservice.productservice.exceptions.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Component
+//@Configuration
+//@PropertySource("classpath:application.properties")
 public class FakeStoreClientAdapter {
 
 //    private String fakeStoreUrl;
@@ -23,7 +27,7 @@ public class FakeStoreClientAdapter {
 
 //    @Value("${fakestore.api.url}")
 //    private  String fakestoreurl;
-//
+////
 //    @Value("${fakestore.api.path.products}")
 //    private String productpath;
     private String specificProductUrl;
@@ -38,7 +42,7 @@ public class FakeStoreClientAdapter {
     {
         this.restTemplateBuilder = restTemplateBuilder;
         this.specificProductUrl = fakestoreurl + productpath + "/{id}";
-        this.genericProductUrl =fakestoreurl + productpath;
+        this.genericProductUrl =  fakestoreurl + productpath;
     }
 
 
