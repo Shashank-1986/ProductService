@@ -1,4 +1,4 @@
 package com.productservice.productservice.thirdPartyClients.fakeStoreClient.flipkartClient;
 
-public class FlipkarClientAdapter {
+public class FlipkartClientAdapter {
 }

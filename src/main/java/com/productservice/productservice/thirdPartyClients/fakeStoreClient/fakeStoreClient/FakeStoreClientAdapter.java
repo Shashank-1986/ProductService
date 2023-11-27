@@ -3,6 +3,8 @@ package com.productservice.productservice.thirdPartyClients.fakeStoreClient.fake
 import com.productservice.productservice.dtos.FakeStoreProductDTO;
 import com.productservice.productservice.dtos.GenericProductDTO;
 import com.productservice.productservice.exceptions.ProductNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +17,28 @@ import java.util.List;
 
 @Component
 public class FakeStoreClientAdapter {
-    private String specificProductUrl = "https://fakestoreapi.com/products/{id}";
 
-    private String genericProductUrl = "https://fakestoreapi.com/products";
+//    private String fakeStoreUrl;
+//    private String pathForProducts;
+
+//    @Value("${fakestore.api.url}")
+//    private  String fakestoreurl;
+//
+//    @Value("${fakestore.api.path.products}")
+//    private String productpath;
+    private String specificProductUrl;
+    private String genericProductUrl;
+
     private RestTemplateBuilder restTemplateBuilder;
 
-    FakeStoreClientAdapter(RestTemplateBuilder restTemplateBuilder)
+    @Autowired
+    FakeStoreClientAdapter(RestTemplateBuilder restTemplateBuilder,
+                           @Value("${fakestore.api.url}") String fakestoreurl,
+                           @Value("${fakestore.api.path.products}") String productpath)
     {
         this.restTemplateBuilder = restTemplateBuilder;
+        this.specificProductUrl = fakestoreurl + productpath + "/{id}";
+        this.genericProductUrl =fakestoreurl + productpath;
     }
 
 
@@ -79,7 +95,6 @@ public class FakeStoreClientAdapter {
         ResponseEntity<FakeStoreProductDTO> responseEntity =
                 restTemplate.execute(specificProductUrl, HttpMethod.PUT, requestCallback, responseExtractor, id);
         //restTemplate.exchange(specificProductUrl, HttpMethod.PATCH, requestCallback, responseExtractor, id);
-
         return responseEntity.getBody();
     }
 }
