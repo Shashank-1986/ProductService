@@ -1,27 +1,35 @@
 package com.productservice.productservice;
 
-import com.productservice.productservice.inheritancerelations.singletable.*;
 import com.productservice.productservice.models.Category;
+import com.productservice.productservice.models.Price;
 import com.productservice.productservice.models.Product;
 import com.productservice.productservice.repositories.CategoryRepository;
+import com.productservice.productservice.repositories.OrderRepository;
+import com.productservice.productservice.repositories.PriceRepository;
 import com.productservice.productservice.repositories.ProductRepository;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.UUID;
+
 @SpringBootApplication
 //This is combination of three annotation @ComponentScan @EnableAutoConfiguration @Configuration
-public class ProductServiceApplication implements CommandLineRunner {
+public class ProductServiceApplication implements CommandLineRunner{
 
-    private final CategoryRepository categoryRepository;
-    private final ProductRepository productRepository;
-
-    public ProductServiceApplication(CategoryRepository categoryRepository,
-                                     ProductRepository productRepository) {
-        this.categoryRepository = categoryRepository;
-        this.productRepository = productRepository;
-    }
+//    private final CategoryRepository categoryRepository;
+//    private final ProductRepository productRepository;
+//    private final PriceRepository priceRepository;
+//
+//    @Autowired
+//    public ProductServiceApplication(CategoryRepository categoryRepository,
+//                                     ProductRepository productRepository,
+//                                     PriceRepository priceRepository) {
+//        this.categoryRepository = categoryRepository;
+//        this.productRepository = productRepository;
+//        this.priceRepository = priceRepository;
+//    }
 
 //    private MentorRepository mentorRepository;
 //    private StudentRepository studentRepository;
@@ -103,18 +111,57 @@ public class ProductServiceApplication implements CommandLineRunner {
 //            mentorRepository.save(mentor);
 
 
-            Category category = new Category();
-            category.setName("Apple Devices");
+//            Category category = new Category();
+//            category.setName("Apple Devices");
+//            Category savedCategory = categoryRepository.save(category);
 
-            Category savedCategory = categoryRepository.save(category);
+//            Optional<Category> optionalCategory = categoryRepository.findById(UUID.fromString("01fa256d-bc5c-4dae-9927-29f64c166c37"));
+//
+//            if(optionalCategory.isEmpty())
+//            {
+//                throw new Exception("Category was null");
+//            }
+//            Category category = optionalCategory.get();
 
-            Product product = new Product();
-            product.setTitle("iphone 15 pro");
-            product.setDescription("Best Iphone ever");
-            product.setCategory(savedCategory);
+//            Product product = new Product();
+//            product.setTitle("iphone 15 pro");
+//            product.setDescription("Best Iphone ever");
+//            product.setCategory(category);
+//            product.setCategory(category.get());
 
-            productRepository.save(product);
+//            Product saveProduct = productRepository.save(product);
 
+//              List<Product> products = category.getProducts();
+//
+//              for(Product pr: products)
+//              {
+//                  System.out.println(pr.getTitle());
+//              }
+//
+//            Price price = new Price();
+//            price.setCurrency("INR");
+//            price.setValue(100000);
+//
+//            Price savedPrice = priceRepository.save(price);
+//
+//            Category category = new Category();
+//            category.setName("Apple Devices");
+//
+//            Category savedCategory = categoryRepository.save(category);
+//
+//            Product product = new Product();
+//            product.setTitle("iPhone 15 pro");
+//            product.setDescription("Best iPhone ever");
+//            product.setCategory(category);
+//            product.setPrice(price);
+//
+//            productRepository.save(product);
+
+//            Product savedProduct = productRepository.getById(UUID.fromString("f9b59066-1daa-4b21-a998-b5716edc9ed6"));
+//
+////            priceRepository.deleteById(UUID.fromString("68dfc3e9-7516-48c2-88ca-6fe012643e58"));
+//
+//            productRepository.delete(savedProduct);
 
         }
 }

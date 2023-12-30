@@ -8,6 +8,7 @@ import com.productservice.productservice.exceptions.ProductNotFoundException;
 import com.productservice.productservice.services.ProductService;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class ProductController {
 
     //@Autowired//optional in new Spring Version
     //constructor Injection
-    public ProductController(@Qualifier("fakestoreproductservice") ProductService productService) {
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
 

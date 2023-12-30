@@ -57,7 +57,8 @@ public class FakeStoreClientAdapter {
 
         if(fakeStoreProductDTO==null)
         {
-            throw new ProductNotFoundException("Product with id: "+ id  +" doesn't exist");
+            //throw new ProductNotFoundException("Product with id: "+ id  +" doesn't exist");
+            return null;
         }
 
         return fakeStoreProductDTO;
