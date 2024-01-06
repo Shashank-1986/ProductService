@@ -5,12 +5,14 @@ import com.productservice.productservice.dtos.FakeStoreProductDTO;
 import com.productservice.productservice.dtos.GenericProductDTO;
 import com.productservice.productservice.exceptions.ProductNotFoundException;
 import com.productservice.productservice.thirdPartyClients.fakeStoreClient.fakeStoreClient.FakeStoreClientAdapter;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("fakestoreproductservice")
+@Primary
+@Service
 //it tells the spring to create the object
 //it comprises of three annotation @Component, @Repository , @Controller.
 //These annotations help define the roles of various components in a Spring application

@@ -16,8 +16,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/products")
-@Getter
-@Setter
+//@Getter
+//@Setter
 //this is the way to tell Spring that it is not a normal controller, rather its containing a Rest API
 public class ProductController {
     //@Autowired//Field Injection is not recommended
