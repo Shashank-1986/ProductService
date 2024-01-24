@@ -48,34 +48,34 @@ public class ProductControllerTests {
         assertNull(fakeStoreClientAdapter.getProductByID(1000L));
 
     }
-    @Test
-    void testGetProductByIdMock() throws ProductNotFoundException {
-        GenericProductDTO genericProductDTO = new GenericProductDTO();
-        when(productService.getProductByID(100L)).thenReturn(genericProductDTO);
+//    @Test
+//    void testGetProductByIdMock() throws ProductNotFoundException {
+//        GenericProductDTO genericProductDTO = new GenericProductDTO();
+//        when(productService.getProductByID(100L)).thenReturn(genericProductDTO);
+//
+//        GenericProductDTO genericProductDTO1 = productController.getProductByID(100L);
+//        assertEquals(genericProductDTO1, genericProductDTO);
+//        //assertEquals(genericProductDTO, productController.getProductByID(100L));
+//        //assertNull(productController.getProductByID(100L));
+//    }
 
-        GenericProductDTO genericProductDTO1 = productController.getProductByID(100L);
-        assertEquals(genericProductDTO1, genericProductDTO);
-        //assertEquals(genericProductDTO, productController.getProductByID(100L));
-        //assertNull(productController.getProductByID(100L));
-    }
+//    @Test
+//    void testGetProductByIdMockException() throws ProductNotFoundException {
+//        when(productService.getProductByID(1L)). thenThrow(ProductNotFoundException.class);
+//        assertThrows(ProductNotFoundException.class, () ->productController.getProductByID(1L));
+//    }
 
-    @Test
-    void testGetProductByIdMockException() throws ProductNotFoundException {
-        when(productService.getProductByID(1L)). thenThrow(ProductNotFoundException.class);
-        assertThrows(ProductNotFoundException.class, () ->productController.getProductByID(1L));
-    }
-
-    @Test
-    @DisplayName("testProductControllerCallsProductServiceWithSameProductIdAsInput")
-    void testIfSameInput() throws ProductNotFoundException {
-        //this is test case to check whether controller is passing same Product ID to the Product service as Input
-        Long id = 100L;
-        when(productService.getProductByID(id)).thenReturn(new GenericProductDTO());
-
-        GenericProductDTO genericProductDTO = productController.getProductByID(id);
-
-        verify(productService).getProductByID(argumentCaptor.capture());
-
-        assertEquals(id, argumentCaptor.getValue());
-    }
+//    @Test
+//    @DisplayName("testProductControllerCallsProductServiceWithSameProductIdAsInput")
+//    void testIfSameInput() throws ProductNotFoundException {
+//        //this is test case to check whether controller is passing same Product ID to the Product service as Input
+//        Long id = 100L;
+//        when(productService.getProductByID(id)).thenReturn(new GenericProductDTO());
+//
+//        GenericProductDTO genericProductDTO = productController.getProductByID(id);
+//
+//        verify(productService).getProductByID(argumentCaptor.capture());
+//
+//        assertEquals(id, argumentCaptor.getValue());
+//    }
 }

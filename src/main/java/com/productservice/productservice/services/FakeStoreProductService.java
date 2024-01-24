@@ -4,12 +4,16 @@ package com.productservice.productservice.services;
 import com.productservice.productservice.dtos.FakeStoreProductDTO;
 import com.productservice.productservice.dtos.GenericProductDTO;
 import com.productservice.productservice.exceptions.ProductNotFoundException;
+import com.productservice.productservice.security.JwtObject;
+import com.productservice.productservice.security.TokenValidator;
 import com.productservice.productservice.thirdPartyClients.fakeStoreClient.fakeStoreClient.FakeStoreClientAdapter;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Primary
 @Service
@@ -19,11 +23,15 @@ import java.util.List;
 public class FakeStoreProductService implements ProductService {
         private FakeStoreClientAdapter fakeStoreClientAdapter;
 
-        FakeStoreProductService(FakeStoreClientAdapter fakeStoreClientAdapter)
+        private TokenValidator tokenValidator;
+
+        //private RuleEngine ruleEngine;
+
+        FakeStoreProductService(FakeStoreClientAdapter fakeStoreClientAdapter, TokenValidator tokenValidator)
         {
             this.fakeStoreClientAdapter = fakeStoreClientAdapter;
+            this.tokenValidator = tokenValidator;
         }
-
 
     private static GenericProductDTO convertGenericToDto(FakeStoreProductDTO fakeStoreProductDTO)
     {
@@ -36,10 +44,28 @@ public class FakeStoreProductService implements ProductService {
         genericProductDTO.setImage(fakeStoreProductDTO.getImage());
         return genericProductDTO;
     }
-    public GenericProductDTO getProductByID(Long id) throws ProductNotFoundException {
-        return convertGenericToDto(fakeStoreClientAdapter.getProductByID(id));
+
+    @Override
+    public GenericProductDTO getProductByID(String authToken, Long id) throws ProductNotFoundException {
+
+        System.out.println(authToken);
+        Optional<JwtObject> jwtObjectOptional = tokenValidator.validateToken(authToken);
+        if(jwtObjectOptional.isEmpty())
+        {
+           return null;
+        }
+
+        JwtObject jwtObject = jwtObjectOptional.get();
+        Long userId = jwtObject.getUserID();
+        //validation at API level can be implemented
+//        if(specialIDs.isPresent(id) && userId== 10)
+//        {
+//
+//        }
+            return convertGenericToDto(fakeStoreClientAdapter.getProductByID(id));
     }
 
+    @Override
     public List<GenericProductDTO> getAllProducts() {
         List<GenericProductDTO> result = new ArrayList<>();
         List<FakeStoreProductDTO> fakeStoreProductDTOS = fakeStoreClientAdapter.getAllProducts();
@@ -50,6 +76,7 @@ public class FakeStoreProductService implements ProductService {
         return result;
     }
 
+    @Override
     public GenericProductDTO deleteProductByID(Long id) {
         return convertGenericToDto(fakeStoreClientAdapter.deleteProductByID(id));
     }
@@ -58,6 +85,7 @@ public class FakeStoreProductService implements ProductService {
         return convertGenericToDto(fakeStoreClientAdapter.createProduct(genericProductDTO));
     }
 
+    @Override
     public GenericProductDTO updateProductByID(Long id, GenericProductDTO genericProductDTO) {
         return convertGenericToDto(fakeStoreClientAdapter.updateProductByID(id, genericProductDTO));
     }

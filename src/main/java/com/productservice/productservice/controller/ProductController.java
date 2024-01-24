@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,8 +32,8 @@ public class ProductController {
 
 
     @GetMapping("/{id}")
-    public GenericProductDTO getProductByID(@PathVariable("id") Long id) throws ProductNotFoundException {
-        return productService.getProductByID(id);
+    public GenericProductDTO getProductByID(@RequestHeader(HttpHeaders.AUTHORIZATION) String authToken,  @PathVariable("id") Long id) throws ProductNotFoundException {
+        return productService.getProductByID(authToken, id);
         //return "Product fetched with id: " + id;
     }
 

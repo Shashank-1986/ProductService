@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    GenericProductDTO getProductByID(Long id) throws ProductNotFoundException;
+    GenericProductDTO getProductByID(String authToken, Long id) throws ProductNotFoundException;
 
     List<GenericProductDTO> getAllProducts();
 
